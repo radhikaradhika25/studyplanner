@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Completed Tasks</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="logo">
+        <i class="fa-solid fa-book-open"></i>
+        <h2>Study Planner</h2>
+    </div>
+
+    <div class="user">
+        <i class="fa-solid fa-circle-user"></i>
+        Welcome, Student
+    </div>
+
+</header>
+
+<div class="container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <ul>
+
+            <li>
+                <a href="/dashboard">
+                    <i class="fa-solid fa-house"></i>
+                    Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="/pending">
+                    <i class="fa-solid fa-hourglass-half"></i>
+                    Pending Tasks
+                </a>
+            </li>
+
+            <li class="active">
+                <a href="/completed">
+                    <i class="fa-solid fa-circle-check"></i>
+                    Completed Tasks
+                </a>
+            </li>
+
+        </ul>
+
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content">
+
+        <div class="box">
+
+            <h2>
+                <i class="fa-solid fa-circle-check"></i>
+                Completed Tasks
+            </h2>
+
+            <table style="width:100%; border-collapse:collapse; margin-top:20px;">
+
+                <tr style="background:#16a34a; color:white;">
+
+                    <th style="padding:12px;">Subject</th>
+                    <th>Topic</th>
+                    <th>Deadline</th>
+
+                </tr>
+
+                {% for task in tasks %}
+
+                <tr>
+
+                    <td style="padding:12px;">{{ task[1] }}</td>
+                    <td>{{ task[2] }}</td>
+                    <td>{{ task[3] }}</td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>
