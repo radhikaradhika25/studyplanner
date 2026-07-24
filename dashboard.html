@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Study Planner Dashboard</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <div class="logo">
+
+        <a href="/dashboard">
+
+            <i class="fa-solid fa-book-open"></i>
+
+            <span>Study Planner</span>
+
+        </a>
+
+    </div>
+
+    <div class="header-right">
+
+        <button class="icon-btn">
+
+            <i class="fa-solid fa-bell"></i>
+
+        </button>
+
+        <button class="icon-btn">
+
+            <i class="fa-solid fa-moon"></i>
+
+        </button>
+
+        <div class="profile">
+
+            <i class="fa-solid fa-circle-user"></i>
+
+            <div>
+
+                <h4>Welcome</h4>
+
+                <p>Student</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+<!-- ================= MAIN ================= -->
+
+<div class="wrapper">
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar">
+
+    <div class="sidebar-title">
+
+        MENU
+
+    </div>
+
+    <ul>
+
+        <li class="active">
+
+            <a href="/dashboard">
+
+                <i class="fa-solid fa-house"></i>
+
+                Dashboard
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="#addtask">
+
+                <i class="fa-solid fa-circle-plus"></i>
+
+                Add Task
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="/pending">
+
+                <i class="fa-solid fa-hourglass-half"></i>
+
+                Pending Tasks
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="/completed">
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                Completed Tasks
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="/login">
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+                Logout
+
+            </a>
+
+        </li>
+
+    </ul>
+
+</aside>
+
+<!-- ================= CONTENT ================= -->
+
+<main class="content">
+
+<!-- ================= PAGE TITLE ================= -->
+
+<div class="page-title">
+
+    <div>
+
+        <h1>Dashboard</h1>
+
+        <p>
+
+            Manage your study schedule efficiently.
+
+        </p>
+
+    </div>
+
+</div>
+
+<!-- ================= DASHBOARD CARDS ================= -->
+
+<div class="cards">
+
+    <!-- Total -->
+
+    <div class="card blue">
+
+        <div class="icon">
+
+            <i class="fa-solid fa-list-check"></i>
+
+        </div>
+
+        <div class="card-info">
+
+            <h2>{{ total }}</h2>
+
+            <p>Total Tasks</p>
+
+        </div>
+
+    </div>
+
+    <!-- Pending -->
+
+    <div class="card orange">
+
+        <div class="icon">
+
+            <i class="fa-solid fa-hourglass-half"></i>
+
+        </div>
+
+        <div class="card-info">
+
+            <h2>{{ pending }}</h2>
+
+            <p>Pending Tasks</p>
+
+        </div>
+
+    </div>
+
+    <!-- Completed -->
+
+    <div class="card green">
+
+        <div class="icon">
+
+            <i class="fa-solid fa-circle-check"></i>
+
+        </div>
+
+        <div class="card-info">
+
+            <h2>{{ completed }}</h2>
+
+            <p>Completed Tasks</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= ADD TASK ================= -->
+
+<section class="task-box" id="addtask">
+
+<h2>
+
+<i class="fa-solid fa-circle-plus"></i>
+
+Add New Task
+
+</h2>
+
+<form action="/add_task"
+      method="POST"
+      class="task-form">
+
+<div class="form-grid">
+
+<div class="input-box">
+
+<label>
+
+Subject
+
+</label>
+
+<input
+type="text"
+name="subject"
+placeholder="Enter Subject"
+required>
+
+</div>
+
+<div class="input-box">
+
+<label>
+
+Topic
+
+</label>
+
+<input
+type="text"
+name="topic"
+placeholder="Enter Topic"
+required>
+
+</div>
+
+<div class="input-box">
+
+<label>
+
+Deadline
+
+</label>
+
+<input
+type="date"
+name="deadline"
+required>
+
+</div>
+
+<div class="button-box">
+
+<button
+type="submit">
+
+<i class="fa-solid fa-plus"></i>
+
+Add Task
+
+</button>
+
+</div>
+
+</div>
+
+</form>
+
+</section>
+<!-- ================= DASHBOARD PANELS ================= -->
+
+<div class="bottom-section">
+
+    <!-- ================= UPCOMING DEADLINES ================= -->
+
+    <div class="panel orange-panel">
+
+        <div class="panel-header">
+
+            <h3>
+
+                <i class="fa-solid fa-calendar-days"></i>
+
+                Upcoming Deadlines
+
+            </h3>
+
+            <a href="/pending" class="view-all">
+
+                View All
+
+            </a>
+
+        </div>
+
+        <ul class="task-list">
+
+            {% for task in pending_tasks[:5] %}
+
+            <li>
+
+                <div class="task-details">
+
+                    <h4>{{ task[1] }}</h4>
+
+                    <p>{{ task[2] }}</p>
+
+                </div>
+
+                <div class="task-date">
+
+                    {{ task[3] }}
+
+                </div>
+
+            </li>
+
+            {% else %}
+
+            <li class="empty">
+
+                <i class="fa-solid fa-face-smile"></i>
+
+                <span>No Pending Tasks</span>
+
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+    </div>
+
+
+
+    <!-- ================= RECENT COMPLETED ================= -->
+
+    <div class="panel green-panel">
+
+        <div class="panel-header">
+
+            <h3>
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                Recently Completed
+
+            </h3>
+
+            <a href="/completed" class="view-all">
+
+                View All
+
+            </a>
+
+        </div>
+
+        <ul class="task-list">
+
+            {% for task in completed_tasks[:5] %}
+
+            <li>
+
+                <div class="task-details">
+
+                    <h4>{{ task[1] }}</h4>
+
+                    <p>{{ task[2] }}</p>
+
+                </div>
+
+                <div class="task-date">
+
+                    {{ task[3] }}
+
+                </div>
+
+            </li>
+
+            {% else %}
+
+            <li class="empty">
+
+                <i class="fa-solid fa-face-smile"></i>
+
+                <span>No Completed Tasks</span>
+
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================= RECENT TASKS ================= -->
+
+<section class="table-card">
+
+    <div class="table-header">
+
+        <h2>
+
+            <i class="fa-solid fa-table-list"></i>
+
+            Recent Tasks
+
+        </h2>
+
+    </div>
+
+    <div class="table-responsive">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Subject</th>
+
+                    <th>Topic</th>
+
+                    <th>Deadline</th>
+
+                    <th>Status</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for task in recent_tasks %}
+
+                <tr>
+
+                    <td>{{ task[0] }}</td>
+
+                    <td>{{ task[1] }}</td>
+
+                    <td>{{ task[2] }}</td>
+
+                    <td>{{ task[3] }}</td>
+
+                    <td>
+
+                        {% if task[4] == "Completed" %}
+
+                        <span class="badge completed">
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Completed
+
+                        </span>
+
+                        {% else %}
+
+                        <span class="badge pending">
+
+                            <i class="fa-solid fa-clock"></i>
+
+                            Pending
+
+                        </span>
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+            {% else %}
+
+                <tr>
+
+                    <td colspan="5" class="empty-table">
+
+                        No Tasks Available
+
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    <div class="footer-content">
+
+        <div class="footer-left">
+
+            <i class="fa-solid fa-book-open"></i>
+
+            <span>Study Planner</span>
+
+        </div>
+
+        <div class="footer-right">
+
+            © 2026 Study Planner | Flask + ShaktiDB
+
+        </div>
+
+    </div>
+
+</footer>
+
+</main>
+
+</div>
+
+<!-- ================= OPTIONAL JAVASCRIPT ================= -->
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    <div class="footer-content">
+
+        <div class="footer-left">
+
+            <i class="fa-solid fa-book-open"></i>
+
+            <span>Study Planner</span>
+
+        </div>
+
+        <div class="footer-right">
+
+            © 2026 Study Planner | Flask + ShaktiDB
+
+        </div>
+
+    </div>
+
+</footer>
+
+</main>
+
+</div>
+
+<!-- ================= OPTIONAL JAVASCRIPT ================= -->
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>
