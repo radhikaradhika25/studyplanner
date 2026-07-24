@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Pending Tasks</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="logo">
+        <i class="fa-solid fa-book-open"></i>
+        <span>Study Planner</span>
+    </div>
+
+    <div class="profile">
+        <span>Welcome, Student</span>
+        <i class="fa-solid fa-circle-user"></i>
+    </div>
+
+</header>
+
+<div class="wrapper">
+
+<!-- Sidebar -->
+
+<aside class="sidebar">
+
+<ul>
+
+<li>
+<a href="/dashboard">
+<i class="fa-solid fa-house"></i>
+Dashboard
+</a>
+</li>
+
+<li>
+<a href="/dashboard#addtask">
+<i class="fa-solid fa-circle-plus"></i>
+Add Task
+</a>
+</li>
+
+<li class="active">
+<a href="/pending">
+<i class="fa-solid fa-hourglass-half"></i>
+Pending Tasks
+</a>
+</li>
+
+<li>
+<a href="/completed">
+<i class="fa-solid fa-circle-check"></i>
+Completed Tasks
+</a>
+</li>
+
+<li>
+<a href="/">
+<i class="fa-solid fa-right-from-bracket"></i>
+Logout
+</a>
+</li>
+
+</ul>
+
+</aside>
+
+<!-- Content -->
+
+<div class="content">
+
+<div class="table-card">
+
+<h2>
+
+<i class="fa-solid fa-hourglass-half"></i>
+
+Pending Tasks
+
+</h2>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Subject</th>
+<th>Topic</th>
+<th>Deadline</th>
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for task in tasks %}
+
+<tr>
+
+<td>{{ task[1] }}</td>
+
+<td>{{ task[2] }}</td>
+
+<td>{{ task[3] }}</td>
+
+<td>
+
+<a href="/complete/{{ task[0] }}" class="complete-btn">
+
+Complete
+
+</a>
+
+</td>
+
+</tr>
+
+{% else %}
+
+<tr>
+
+<td colspan="4" style="text-align:center;padding:30px;">
+
+No Pending Tasks
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+
+</html>
